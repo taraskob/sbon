@@ -1,0 +1,165 @@
+{VKLADY										
+AsNumber	INT	UNSIGNED NOT NULL	Реєстраційний номер рахунку або код контрагента							
+AccountNumber	CHAR(10)	NOT NULL	Повний номер рахунку з контрольними розрядами							
+Name	VARCHAR(75)	NOT NULL	Прізвище клієнта							
+VklNum	INT	NOT NULL	Порядковий номер вкладу - договору на вклад							
+ShifrVkl	INT	NOT NULL	Шифр вкладу  з  довідника вкладів							
+VklTyp	INT	NOT NULL	ип  вкладу: 0 – поточний ( основний); 1 – строковий; 2 - чековий							
+StatusVkl	INT	NULL	Ознака ( 0 – відкритий , 1 – блокований )							
+ProcSt	VARCHAR (10)	NULL	Процентна ставка							 
+Data_Vidk	DATE	NOT NULL	Дата відкриття вкладу							
+Data_Zakr	DATE	NULL	Дата закриття вкладу							
+Suma	INT	NULL	Сума вкладу							
+KodVal	INT	NOT NULL	Код валюти							
+DataOp	DATE	NULL	Дата останнього умовного нарахування процентів або останньої операції							
+ProcUNar	INT	NULL	% умовно нарахований за період від відкриття депозиту до поточної дати							
+Oz7041_1	CHAR(14)	NULL	Операційні затрати  НЕ виплачені і НЕ оподатковані							
+Oz7041_2	CHAR(14)	NULL	Операційні затрати  НЕ виплачені і Оподатковані							
+Oz7041_3	CHAR(14)	NULL	Операційні затрати  Виплачені і НЕ оподатковані.							
+Oz7041_4	CHAR(14)	NULL	Операційні затрати  Виплачені і Оподатковані							
+ProcNar	INT	NULL	% умовно нарахований за період від відкриття депозиту до поточної дати							
+Data_Nar	DATE	NULL	Дата останнього нарахування процентів							
+Proc_Zar	INT	NULL	Зарахований (виплачений) процент  - (2620)							
+Data_Zar	DATE	NULL	Дата останнього зарахування процентів (Капіталізації)							
+Suma_P	INT	NULL	Сума вкладу початкова							
+Proc_DoZakr	INT	NULL	Умовно нарахований %  від  відкриття до останнього нарахування %							
+Proc_Min	INT	NULL	%  Знятий з зарахованого або перерахований на вклад ДЗП							
+Proccount	INT	NULL	Процентне число							
+INDEX AsNumber_idx (AsNumber ASC),INDEX vklady (AsNumber ASC, Data_Vidk ASC, KodVal ASC, VklNum ASC)) ENGINE = InnoDB;}										
+{ACNTBALN										
+asNumber	INT	UNSIGNED NOT NULL	Реєстраційний номер рахунку							
+AnAccount	CHAR(14)	NULL	Аналітичний номер  рахунку							
+OznAP	CHAR(2)	NULL	Ознака рахунку :   А - акстивний , П- пасивний ,АП -  активно-пасивний							
+Nazva	VARCHAR(50)	NULL	Назва  аналітичного  рухунку							
+StatusAccount	INT	NULL	Статус рахунку							
+KodVal	INT	NULL	Код   валюти							
+KodStrok	INT	NULL	Код строку зберігання							
+Suma	INT	NULL	Поточний залишок коштів на рахунку							
+SaldoR	INT	NULL	Сальдо  на  початок року							
+ObDd	INT	NULL	Обороти дебетові за день							
+ObKd	INT	NULL	Обороти кредитові за день							
+ObDm	INT	NULL	Обороти  дебетові  з  поч.  Місяця							
+ObKm	INT	NULL	Обороти  кредитові  з поч. місяця							
+ObDk	INT	NULL	Обороти  дебетові  з поч. кварталу							
+ObKk	INT	NULL	Обороти  кредитові  з поч. Кварталу							
+ObDr	INT	NULL	Обороти  дебетові  з поч.  Року							
+ObKr	INT	NULL	Обороти  кредитові  з поч.  Року							
+PRIMARY KEY (asNumber),UNIQUE INDEX asNumber_UNIQUE (asNumber ASC),INDEX AnAccount_UNIQUE (AnAccount ASC)) ENGINE = InnoDB;}										
+{CLIENT										
+AsNumber	INT	UNSIGNED NOT NULL	Реєстраційний номер рахунку							
+PAN	CHAR(19)	NOT NULL	ПАНкод							
+Status	INT	NULL	Статус рахунку							
+DataOpen	DATE	NOT NULL	Дата відкриття							
+DateChange	DATE	NULL	Дата зміни даних контрагента							
+DataClose	DATE	NULL	Дата закриття							
+IDN_Podatk	CHAR(10)	NULL	Ідентифікаційний податковий код							
+Name	VARCHAR(100)	NOT NULL	Прізвище клієнта							
+Address	VARCHAR(100)	NULL	Адреса клієнта							
+Phone	VARCHAR(18)	NULL	Телефон							
+BirthDate	DATE	NULL	Дата  народження							
+AddressBD	VARCHAR(100)	NULL	Місце  народження							
+Passport	CHAR(19)	NULL	Серія і номер паспорта							
+PassportDate	DATE	NULL	Дата видачі паспорта							
+PassportWhere	VARCHAR(70)	NULL	Ким і коли виданий							
+Resident	INT	NULL	Параметр резидентності клієнта  (1-резидент, 2-нерезидент)							
+Country	INT	NULL	Код країни  (001-999)							
+OznIns	INT	NULL	Ознака інсайдера							
+instSek	INT	NULL	Інституційний сектор економіки							
+UNIQUE INDEX AsNumber_UNIQUE (AsNumber ASC),UNIQUE INDEX PAN_UNIQUE (PAN ASC),INDEX Name (Name ASC),INDEX Passport (Passport ASC),INDEX IdCode (IDN_Podatk ASC),INDEX BirthDay (BirthDate ASC), PRIMARY KEY (PAN)) ENGINE = InnoDB;}										
+{DOV_ANAL										
+AR_INVAL	CHAR(14)	NULL	Аналітичний рахунок в іноземній валюті							
+AR_NAVAL	CHAR(14)	NULL	Аналітичний рахунок в національні валюті							
+ShifrVkl	CHAR(14)	NULL	шифр депозиту згідно із DOV_VKL							
+) ENGINE = InnoDB;}										
+{DOV_CONVOPER										
+Name	VARCHAR(30)	NULL	Назва бухгалтерської проводки							
+CodeOper	INT	NULL	Код операції							
+CodValFrom	INT	NULL	Код валюти							
+RateType	ENUM('0', '1')	NULL	Курс конвертації: 0 – НБУ, 1 – банку							
+ConvCodeOper	INT	NULL	Код операції для конвертації валюти							
+KodValTo	INT	NULL	Код валюти, у яку конвертується 							
+)ENGINE = InnoDB;}										
+{DOV_ISEK										
+ParIsek	INT	NULL	Параметр  інституційного сектору економіки							
+ParUsek	INT	NULL	Параметр  узагальненого  сектору економіки							
+Nazva	VARCHAR(50)	NULL	Назва параметру							
+) ENGINE = InnoDB;}										
+{DOV_SYMZ										
+sKasZv	INT	NULL	Код символу звіту							
+Nazva	VARCHAR(50)	NULL	Назва прибуткової або видаткової статті , що відповідає символу звіту							
+Oznaka	INT	NULL	Ознака операції:  0 – прихід в касу, 1- видача з каси							
+) ENGINE = InnoDB;}										
+{DOV_VAL										
+CodeR030	INT	NULL	Числовий код валюти							
+GroupR031	ENUM('1', '2', '3')	NULL	Група валют							
+GroupR032	ENUM('1', '2', '3', '9')	NULL	Група валют  за групами країн							
+Nazva	VARCHAR(30)	NULL	Назва валют							
+LitCode	CHAR(3)	NULL	Літерний код							
+Konvert	INT	NULL	Ступінь конвертації							
+Suffics	CHAR(5)	NULL	Суфікс – ознака для виводу на друк							
+MinNom	INT	NULL	Мінімальний номінал							
+) ENGINE = InnoDB;}										
+{DOV_VKL										
+Shifr	INT	NULL	Шифр вкладу							
+Nazva	VARCHAR(50)	NULL	Назва  вкладу							
+ProcSt	VARCHAR(10)	NULL	Процентна ставка							
+VklTyp	INT	NULL	Тип вкладу:  0 – поточний (основний); 1 – строковий;  2 – чековий;  3 – картрахунок							
+TypProcSt	ENUM('1', '2')	NULL	Тип процетної ставки (1 – фіксована, 2 – плаваюча)							
+BaseObProc	ENUM('360', '365', '366')	NULL	База обчислення процентів (360, 365, 366 днів)							
+KodVal	INT	NULL	Код валюти							
+KodStrok	INT	NULL	Код строку депозитних рахунків							
+AR_Vkl	CHAR(14)	NULL	Рахунок для обліку  прихідних / витратних операцій  за даним видом вкладу							
+AR_nProc	CHAR(14)	NULL	Рахунок для обліку  нарахованих процентів для даного виду вкладу							
+AR_zProc	CHAR(14)	NULL	Рахунок для обліку  зарахованих процентів для даного виду вкладу. Якщо відсутній, то за замовчуванням використовується рахунок AR_Vkl							
+AR_operZat1	CHAR(14)	NULL	Рахунок для обліку гривневого еквіваленту процентних витрат							
+AR_operZat2	CHAR(14)	NULL	Рахунок для обліку процентних витрат нарахованих і Оподаткованих							
+AR_operZat3	CHAR(14)	NULL	Рахунок для обліку гривневого еквіваленту валютної позиції банку							
+AR_operZat4	CHAR(14)	NULL	Рахунок для обліку процентних витрат зарахованих і Ооподаткованих							
+peNarProc	CHAR(14)	NULL	Періодичність нарахування процентів							
+peZarProc	CHAR(14)	NULL	Періодичність зарахування процентів							
+teZakVkl	CHAR(14)	NULL	Термін  закриття  вкладу							
+INDEX dov_vkl (Shifr ASC, KodVal ASC, VklTyp ASC, KodStrok ASC)) ENGINE = InnoDB;}										
+{DOVSTROK										
+ParS180	INT	NULL	Код  S180  строку кредитних та депозитних рахунків							
+ParS181	INT	NULL	Узагальнений код S181: \uF0B7       1 – короткостроковий; \uF0B7       2 – довгостроковий.							
+Nazva	VARCHAR(30)	NULL	Назва строку							
+) ENGINE = InnoDB;}										
+{KURS_VAL										
+KodVal	INT	NULL	Код валюти							
+Kurs_Nbu	FLOAT(11,7)	NULL	Курс НБУ							
+Kurs_Pok	FLOAT(7,3)	NULL	Курс купівлі							
+Kurs_Prod	FLOAT(7,3)	NULL	Курс продажу							
+Koef	INT	NULL	Коефіцієнт курсу валют – співвідношення курсу до одиниці валюти							
+) ENGINE = InnoDB;}										
+{OPERJRNL										
+DocNumber	INT	NOT NULL AUTO_INCREMENT	Номер документу							
+DateDoc	DATE	NULL	Дата документу							
+MFO	CHAR(6)	NULL	МФО банку							
+ACCOUNT	CHAR(14)	NULL	Аналітичний рахунок, з якого списуються кошти							
+MFOK	CHAR(6)	NULL	МФО отримувача							
+ACCOUNTK	CHAR(14)	NULL	Аналітичний рахунок, на який зараховуються кошти							
+FlagDK	INT	NULL	Ознака проводки: 0 – дебетова; 1 - кредитова							
+Suma	INT	NULL	Сума операції							
+SumaEqui	INT	NULL	Сума у гривневому еквіваленті							
+Currency	INT	NULL	Код валюти							
+Skaszv	INT	NULL	Символ касового звіту для операцій з касою							
+Namepayer	VARCHAR(50)	NULL	Назва платника							
+Namepayee	VARCHAR(50)	NULL	Назва одержувача платежу							
+Namepayment	VARCHAR(100)	NULL	Призначення платежу							
+IdnClerk	INT	NULL	Ідентифікатор службовця							
+Status	INT	NULL	Статус проводки0 – виконана (сквитована)							
+NameFile	CHAR(12)	NULL	Назва файлу проводок для передачі в ОДБ							
+ZKPO	CHAR(10)	NULL	ЗКПО							
+ZKPOK	CHAR(10)	NULL	ЗКПО отримувача							
+PRIMARY KEY (DocNumber),UNIQUE INDEX NumOper_UNIQUE (DocNumber ASC),INDEX oper (DocNumber ASC, DateDoc ASC)) ENGINE = InnoDB;}										
+{ACCOUNT										
+AsNumber	INT	UNSIGNED NOT NULL AUTO_INCREMENT	Реєстраційний номер рахунку або код контрагента							
+AccountNumber	CHAR(10)	NOT NULL	Повний номер рахунку з контрольними розрядами							
+Name	VARCHAR(75)	NOT NULL	Прізвище клієнта							
+StatusAccount	CHAR(18)	NOT NULL	Статус рахунку							
+CardSeqNumber	VARCHAR(4)	NULL	Порядковий номер фінансової карточки з ознакою блокування							
+DateEndFinCard	DATE	NULL	Дата закінчення терміну дії фінансової карти							
+PN_Vyp	INT	NULL	Порядковий номер поточної виписки (відлік номерів виписок у межах поточного року починається з 1 і послідовно змінюється по мірі видачі виписки клієнту)							
+PN_opVyp	INT	NULL	Наступний порядковий номер операції у виписці							
+Deposit_Num	INT	NULL	К-сть депозитів на рахунку ( нумерація починається з 1)							
+PRIMARY KEY (AsNumber),UNIQUE INDEX AsNumber_UNIQUE (AsNumber ASC),UNIQUE INDEX AccountNumber_UNIQUE (AccountNumber ASC),INDEX Name (Name ASC)) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4;}										
