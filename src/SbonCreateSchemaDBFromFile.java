@@ -43,6 +43,7 @@ class SbonCreateSchemaDBFromFile {
                     }
                 }
             }
+            statement.close();
             Conn.close();
         } catch (SQLException e) {
             e.printStackTrace();

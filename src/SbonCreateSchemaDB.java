@@ -158,7 +158,7 @@ class SbonCreateSchemaDB {
         s.executeUpdate("CREATE TABLE IF NOT EXISTS sbon.DOV_VKL (" +
                 "  Shifr INT UNSIGNED NOT NULL COMMENT 'Шифр вкладу'," +
                 "  Nazva VARCHAR(50) NULL COMMENT 'Назва  вкладу,'," +
-                "  ProcSt VARCHAR(10) NULL COMMENT 'Процентна ставка'," +
+                "  ProcentSt Float(5,2) NULL COMMENT 'Процентна ставка'," +
                 "  VklTyp INT NULL COMMENT 'Тип вкладу:  0 – поточний (основний); 1 – строковий;  2 – чековий;  3 – картрахунок.'," +
                 "  TypProcSt ENUM('1', '2') NULL COMMENT 'Тип процетної ставки (1 – фіксована, 2 – плаваюча) '," +
                 "  BaseObProc ENUM('360', '365', '366') NULL COMMENT 'База обчислення процентів (360, 365, 366 днів)'," +
