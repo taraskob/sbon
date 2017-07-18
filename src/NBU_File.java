@@ -27,7 +27,7 @@ class NBU_File {
             Date now = new Date();
             DateFormat formatter = new SimpleDateFormat("HHmm");
             String timeOfFile = formatter.format(now);
-            writer.write("02=" + day_on + "=" + day_Begin + "=" + day_End + "=" + day_on + "=" + timeOfFile + "=325279=01=" + NumberOfRowst(count) +
+            writer.write("02=" + day_on + "=" + day_Begin + "=" + day_End + "=" + day_on + "=" + timeOfFile + "=325279=01=" + NumberOfRows(count) +
                     "=" + NBUfilename + "=NNIQ=EDS" + "\r\n");
             writer.write("#1=325279" + "\r\n");
         } catch (SQLException e) {
@@ -37,7 +37,7 @@ class NBU_File {
         }
     }
 
-    static String NumberOfRowst(String count) {
+    static String NumberOfRows(String count) {
         return ("000000000" + count).substring(("000000000" + count).length() - 9);
     }
 
