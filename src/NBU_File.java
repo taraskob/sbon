@@ -20,7 +20,7 @@ class NBU_File {
                                        String NBUfilename, int koeff) {
         try {
             rs.last();
-            String count = String.valueOf(rs.getRow()*koeff);
+            String count = String.valueOf(rs.getRow() * koeff);
 
             rs.beforeFirst();
             writer.write(ServiceLine() + "\r\n");
@@ -52,12 +52,13 @@ class NBU_File {
 
         if (str.charAt(0) == '0')
             return String.valueOf(str.charAt(1));
-        if(str.length()==1)
+        if (str.length() == 1)
             return String.valueOf(str);
         return String.valueOf((char) (Integer.parseInt(str) + 55));
     }
 
     static String date_transform(String day) {
-        return day.substring(4)+"-"+day.substring(2,4)+"-"+day.substring(0,2);
+        return day.substring(4) + "-" + day.substring(2, 4) + "-" + day.substring(0, 2);
     }
+
 }
