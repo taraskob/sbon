@@ -3,7 +3,6 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 class File_03 implements Runnable, CreateFile {
     Thread t;
@@ -15,20 +14,9 @@ class File_03 implements Runnable, CreateFile {
         this.day_on = day_on;
         this.day_for = day_for;
         t = new Thread(this);
-
     }
 
-    private ArrayList<FileCreateListener> listeners = new ArrayList<FileCreateListener>();
-
-    public void addListener(FileCreateListener listener) {
-        listeners.add(listener);
-    }
-
-    private void fireListeners() {
-        for (FileCreateListener listener : listeners) {
-            listener.fireListener(NBUfilename + " created");
-        }
-    }
+    FileCreateListener listener = FileCtrl.getController();
 
     public void CreateFile_03() {
         t.start();
@@ -64,7 +52,7 @@ class File_03 implements Runnable, CreateFile {
                 writer.write("2" + infRow + String.valueOf(rs.getInt("kodval")) + "1=" +
                         NBU_File.AverageProcSt(rs.getInt("suma_vkl"), rs.getFloat("proc_vkl")) + "\r\n");
             }
-            fireListeners();
+            listener.fireListener(NBUfilename + " created");
             writer.close();
             rs.close();
             Conn.close();

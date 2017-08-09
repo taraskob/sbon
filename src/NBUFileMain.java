@@ -11,10 +11,9 @@ class NBUFileMain {
             System.exit(1);
         } else {
             day_begin = "26012009";
-            day_end = "26012009";
+            day_end = day_begin;
             day_on = "27012009";
-            File_03 filenbu = new File_03("26012009", "27012009");
-            filenbu.addListener(ctrl);
+            File_03 filenbu = new File_03(day_begin, day_on);
             filenbu.CreateFile_03();
         }
         miLock = new MultipleInstancesLock("#monthlyfiles");
