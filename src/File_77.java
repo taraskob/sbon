@@ -8,14 +8,38 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-class File_77 {
-    static void CreateFile_77(Connection conn, String day_begin, String day_end, String day_on) {
+class File_77 implements CreateFile {
+    String NBUfilename = null;
+    FileCreateListener listener = FileCtrl.getController();
+    static void writeInfLine(FileWriter writer, ResultSet rs, String D, String outlay_kod) {
+        try {
+            while (rs.next()) {
+                writer.write("1" + D + String.valueOf(rs.getInt("GroupR031")) + "=" +
+                        String.valueOf(rs.getInt("suma_vkl")) + "\r\n");
+                writer.write("1" + outlay_kod + String.valueOf(rs.getInt("GroupR031")) + "=" +
+                        String.valueOf(rs.getInt("Oz")) + "\r\n");
+                writer.write("3" + D + String.valueOf(rs.getInt("GroupR031")) + "=" +
+                        String.valueOf(rs.getInt("vkl_number")) + "\r\n");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void CreateFileNN(String day_begin, String day_end, String day_on) {
         String dayNumber = NBU_File.getNumber(day_on.substring(0, 2));
         String monthNumber = NBU_File.getNumber(day_on.substring(2, 4));
-        String NBUfilename = "#77NIQ" + monthNumber + dayNumber + ".B" + monthNumber + "1";
+        NBUfilename = "#77NIQ" + monthNumber + dayNumber + ".B" + monthNumber + "1";
         Statement statement = null;
         try {
-            statement = conn.createStatement();
+            Connection Conn = SbonDBConnection.CreateDBConnection();
+            if (Conn == null) {
+                return;
+            }
+            statement = Conn.createStatement();
             FileWriter writer = new FileWriter(NBUfilename);
             writer.write(NBU_File.ServiceLine() + "\r\n");
             Date now = new Date();
@@ -37,6 +61,9 @@ class File_77 {
             rs = statement.executeQuery(SQL + "suma*Kurs_Nbu/Koef>500000 group by GroupR031;");
             writeInfLine(writer, rs, "4", "C");
             writer.close();
+            listener.fireListener(NBUfilename + " created");
+            rs.close();
+            Conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -44,20 +71,4 @@ class File_77 {
         }
     }
 
-    static void writeInfLine(FileWriter writer, ResultSet rs, String D, String outlay_kod) {
-        try {
-            while (rs.next()) {
-                writer.write("1" + D + String.valueOf(rs.getInt("GroupR031")) + "=" +
-                        String.valueOf(rs.getInt("suma_vkl")) + "\r\n");
-                writer.write("1" + outlay_kod + String.valueOf(rs.getInt("GroupR031")) + "=" +
-                        String.valueOf(rs.getInt("Oz")) + "\r\n");
-                writer.write("3" + D + String.valueOf(rs.getInt("GroupR031")) + "=" +
-                        String.valueOf(rs.getInt("vkl_number")) + "\r\n");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }

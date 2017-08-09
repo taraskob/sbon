@@ -1,16 +1,26 @@
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 class File_05 implements CreateFile {
+    String NBUfilename = null;
+    FileCreateListener listener = FileCtrl.getController();
+
     @Override
-    public void CreateFileNN(String day_begin, String day_end, String day_on, ResultSet rs) {
+    public void CreateFileNN(String day_begin, String day_end, String day_on) {
         String dayNumber = NBU_File.getNumber(day_on.substring(0, 2));
         String monthNumber = NBU_File.getNumber(day_on.substring(2, 4));
-        String NBUfilename = "#05NIQ" + monthNumber + dayNumber + ".B" + monthNumber + "1";
+        NBUfilename = "#05NIQ" + monthNumber + dayNumber + ".B" + monthNumber + "1";
         FileWriter writer = null;
+
         try {
+            Connection Conn = SbonDBConnection.CreateDBConnection();
+            if (Conn == null) {
+                return;
+            }
+            ResultSet rs = SQLScripts.getRS_05(Conn, day_begin, day_end);
             writer = new FileWriter(NBUfilename);
             NBU_File.WriteServiceRowsToFile(writer, rs, day_begin, day_end, day_on, NBUfilename, 3);
             String infRow = null;
@@ -28,10 +38,13 @@ class File_05 implements CreateFile {
                         String.valueOf(rs.getInt("vkl_number")) + "\r\n");
             }
             writer.close();
+            listener.fireListener(NBUfilename + " created");
+            Conn.close();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
 }
